@@ -1,10 +1,22 @@
 require "find"
 
+def in_specs_dir?
+  Dir.getwd.split("/").last == "specs"
+end
+
 def get_spec_files
   test_files = []
-  Find.find("specs") do |file_path|
-    if file_path.include?("_spec.rb") || file_path.include?("_test.rb")
-      test_files << file_path
+  if in_specs_dir?
+    Dir.foreach(".") do |file_path|
+      if file_path.include?("_spec.rb")
+        test_files << file_path
+      end
+    end
+  else
+    Find.find("specs") do |file_path|
+      if file_path.include?("_spec.rb")
+        test_files << file_path
+      end
     end
   end
   return test_files
