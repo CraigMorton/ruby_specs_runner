@@ -15,6 +15,10 @@ def get_specs_current_dir
 end
 
 def get_specs_sub_dir
+  unless File.directory?("specs")
+    puts "\e[1;35mNo 'specs' directory found.\e[0m"
+    return []
+  end
   test_files = []
   Find.find("specs") do |file_path|
     if file_path.include?("_spec.rb")
