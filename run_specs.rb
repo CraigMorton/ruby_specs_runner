@@ -48,11 +48,12 @@ def format_passing(result_lines)
 end
 
 def format_failing(result_lines)
-  short_result = result_lines.pop
-  result_lines[4] = format_symbols(result_lines[4])
-  result_lines = result_lines[0..-2]
-  result_lines << "\e[1;31m#{short_result}\e[0m"
-  result_lines.join("\n")
+  symbols = format_symbols(result_lines[4])
+  error_output = result_lines[7..-2]
+  summary = "\e[1;31m#{result_lines.last}\e[0m"
+
+  output = [symbols, error_output, summary]
+  output.join("\n")
 end
 
 def format_symbols(symbols)
