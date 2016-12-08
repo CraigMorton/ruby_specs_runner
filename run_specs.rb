@@ -29,18 +29,51 @@ def get_specs_sub_dir
 end
 
 def get_spec_files
-  if in_specs_dir?
-    return get_specs_current_dir
-  else
-    return get_specs_sub_dir
+  in_specs_dir? ? get_specs_current_dir : get_specs_sub_dir
+end
+
+def all_passing?(result_lines)
+  short_result = result_lines.last
+  result_by_type = short_result.split(", ")
+  failures_string = result_by_type[2]
+  errors_string = result_by_type[3]
+  num_failures = failures_string.split(" ").first.to_i
+  num_errors = errors_string.split(" ").first.to_i
+  num_failures == 0 && num_errors == 0
+end
+
+def format_passing(result_lines)
+  short_result = result_lines.last
+  return "\e[1;32m#{short_result}\e[0m"
+end
+
+def format_failing(result_lines)
+  short_result = result_lines.pop
+  result_lines[4] = format_symbols(result_lines[4])
+  result_lines = result_lines[0..-2]
+  result_lines << "\e[1;31m#{short_result}\e[0m"
+  result_lines.join("\n")
+end
+
+def format_symbols(symbols)
+  colourised = symbols.split("").map do |char|
+    char == "." ? "\e[1;32m#{char}\e[0m" : "\e[1;31m#{char}\e[0m"
   end
+  colourised.join("")
 end
 
 def run_tests spec_files
-  spec_files.each_with_index do |file, index|
-    puts "Running test: \e[1;35m#{File.basename(file)}\e[0m"
-    system("ruby #{file}")
-    puts "-" * 51 if (index != spec_files.length - 1)
+  spec_files.each do |file|
+    file_name = File.basename(file)
+    puts "Running: \e[1;95m#{file_name}\e[0m " + ("-" * (54 - file_name.size))
+    test_result = `ruby #{file}`
+    result_lines = test_result.split("\n")
+
+    if all_passing?(result_lines)
+      puts format_passing(result_lines)
+    else
+      puts format_failing(result_lines)
+    end
   end
 end
 
