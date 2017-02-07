@@ -70,10 +70,12 @@ def run_tests spec_files
     test_result = `ruby #{file}`
     result_lines = test_result.split("\n")
 
-    if all_passing?(result_lines)
-      puts format_passing(result_lines)
-    else
-      puts format_failing(result_lines)
+    if result_lines.size > 0
+      if all_passing?(result_lines)
+        puts format_passing(result_lines)
+      else
+        puts format_failing(result_lines)
+      end
     end
   end
 end
