@@ -74,7 +74,7 @@ end
 def run_tests(spec_files)
   spec_files.each do |file|
     file_name = File.basename(file)
-    puts "Running: \e[1;95m#{file_name}\e[0m " + ("-" * (54 - file_name.size))
+    puts "Running: \e[1;35m#{file_name}\e[0m " + ("-" * (54 - file_name.size))
     test_result = `ruby #{file}`
     result_lines = test_result.split("\n")
 
