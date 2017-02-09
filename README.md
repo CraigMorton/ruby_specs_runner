@@ -9,7 +9,12 @@ To install the script in your home directory and set up and alias in your `.zshr
 ```bash
 curl https://raw.githubusercontent.com/CraigMorton/ruby_specs_runner/master/run_specs.rb >> ~/ruby_specs_runner.rb
 echo "alias rubytest='ruby ~/ruby_specs_runner.rb'" >> ~/.zshrc
+source ~/.zshrc
 ```
+
+First command downloads the script from this github repo.
+Second command creates an alias in your `.zshrc`
+Third command reloads your `.zshrc` so you can start using the alias in the current terminal tab.
 
 If you use a different shell (I'm assuming most people who want to use this are codeclan students so I know they have zsh) obviously you'll have to replace `~/.zshrc` in the second command with your own shell configuration file.
 
