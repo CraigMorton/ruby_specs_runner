@@ -1,13 +1,16 @@
 require "find"
 
+TEST_DIRS = ["specs", "tests"]
+
 def in_specs_dir?
-  Dir.getwd.split("/").last == "specs"
+  current_dir = Dir.getwd.split("/").last
+  return TEST_DIRS.include?(current_dir)
 end
 
 def get_specs_current_dir
   test_files = []
   Dir.foreach(".") do |file_path|
-    if file_path.include?("_spec.rb")
+    if file_path[-3..-1] == ".rb"
       test_files << file_path
     end
   end
@@ -15,15 +18,20 @@ def get_specs_current_dir
 end
 
 def get_specs_sub_dir
-  unless File.directory?("specs")
-    puts "\e[1;35mNo 'specs' directory found.\e[0m"
-    return []
+  are_dirs_valid = TEST_DIRS.map { |dir| File.directory?(dir) }
+  valid_dirs = TEST_DIRS.select.with_index do |dir, index|
+    are_dirs_valid[index]
   end
   test_files = []
-  Find.find("specs") do |file_path|
-    if file_path.include?("_spec.rb")
-      test_files << file_path
+  valid_dirs.each do |dir|
+    Find.find(dir) do |file_path|
+      if file_path[-3..-1] == ".rb"
+        test_files << file_path
+      end
     end
+  end
+  if valid_dirs.size == 0
+    puts "\e[1;35mNo 'specs' or 'tests' directory found.\e[0m"
   end
   return test_files
 end
@@ -63,7 +71,7 @@ def format_symbols(symbols)
   colourised.join("")
 end
 
-def run_tests spec_files
+def run_tests(spec_files)
   spec_files.each do |file|
     file_name = File.basename(file)
     puts "Running: \e[1;95m#{file_name}\e[0m " + ("-" * (54 - file_name.size))
@@ -76,10 +84,12 @@ def run_tests spec_files
       else
         puts format_failing(result_lines)
       end
+    else
+      puts format_passing(["No tests found"])
     end
   end
 end
 
-files = get_spec_files()
+files = get_spec_files
 
 run_tests(files)
