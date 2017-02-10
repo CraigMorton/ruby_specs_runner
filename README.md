@@ -16,7 +16,7 @@ First command downloads the script from this github repo.
 Second command creates an alias in your `.zshrc`
 Third command reloads your `.zshrc` so you can start using the alias in the current terminal tab.
 
-If you use a different shell (I'm assuming most people who want to use this are codeclan students so I know they have zsh) obviously you'll have to replace `~/.zshrc` in the second command with your own shell configuration file.
+If you use a different shell (I'm assuming most people who want to use this are codeclan students so I know they have zsh) obviously you'll have to replace `~/.zshrc` in the second and third commands with your own shell configuration file.
 
 Output:
 
