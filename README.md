@@ -4,7 +4,7 @@ Ruby script to run ruby tests &amp; colourise output. Test files must be in dire
 
 You can run this script from either the directory above the `specs/` (or `tests/`) directory, or from within the `specs/`( or `tests/`) directory itself.
 
-To install the script in your home directory and set up and alias in your `.zshrc` to run it from anywhere, run these two commands in your terminal:
+To install the script in your home directory and set up and alias in your `.zshrc` to run it from anywhere, run these three commands in your terminal:
 
 ```bash
 curl https://raw.githubusercontent.com/CraigMorton/ruby_specs_runner/master/run_specs.rb >> ~/ruby_specs_runner.rb
