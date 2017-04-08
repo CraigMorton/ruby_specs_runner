@@ -22,6 +22,6 @@ Output:
 
 ![after](https://raw.githubusercontent.com/CraigMorton/ruby_specs_runner/master/img/after.png)
 
-Before:
+Before, using a simple bash script to run each spec file in turn:
 
 ![before](https://raw.githubusercontent.com/CraigMorton/ruby_specs_runner/master/img/before.png)
